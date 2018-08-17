@@ -61,12 +61,15 @@ def regist():
             return render_template('login.html', error=error)
 
         else:
-            user = User(username, password)
-            db.session.add(user)
-            db.session.commit()
-            flash('You regist successfully!')
-            return redirect((url_for('login')))
-
+            try:
+                user = User(username, password)
+                db.session.add(user)
+                db.session.commit()
+                flash('You regist successfully!')
+                return redirect(url_for('login'))
+            except:
+                flash('error')
+                return redirect(url_for('login'))
 
 @app.route('/logout')
 def logout():
